@@ -25,7 +25,11 @@ Julia can be downloaded from the official website https://julialang.org/. Versio
 
 In order to set up the environment, please go to the directory were *qaoa_efficiency_analysis*. Then run julia and use
 
-  `] instantiate .`
+```
+julia> ]
+(@v1.5) activate .
+(@v1.5) instantiate
+```
   
 This will install the required packages. The environment will be activated on its own when running scripts.
 
