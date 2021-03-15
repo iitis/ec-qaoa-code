@@ -3,6 +3,8 @@ Person responsible for data: *Adam Glos* (aglos [at] iitis.pl).
 
 The scripts necessary for generating the results provided in the "Infeasible space reduction for QAOA through encoding change".
 
+The code used on Ubuntu OS 20.04. It is not guaranteed it will work on other operating systems. 
+
 ## Software installation
 
 ### Anaconda
@@ -29,7 +31,7 @@ This will install the required packages. The environment will be activated on it
 
 ## Reproducing data
 
-The repository already contains the data used in the publications. To generate new samples, please follow the instruction below. 
+The repository already contains the data used in the publications. To generate new samples, please follow the instruction below. Occasionally the code omits generating new data if old already exist - in such case please remove the old data.
 
 ### QAOA performance
 
@@ -50,6 +52,7 @@ include("sparse_generator_loader.jl")
 generator(9)
 generator(6)
 ```
+Note that for n-city instances of tsp one has to run also `generator` with arguments (n-1)^2 and (n-1)*ceil(log(2, n-1)).
 
 
 To produce data, run
@@ -81,4 +84,4 @@ To generate the energy data. Finally rn
 ```
 python plotting_code.py
 ```
-to generate plot.
+to generate plot in the `plots` directory.
