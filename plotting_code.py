@@ -4,11 +4,17 @@ import matplotlib as mpl
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
 
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Helvetica"]})
+## for Palatino and other serif fonts use:
+
 mpl.rc('text', usetex = True)
 
 times = 30 # 10 int(len(angles_list)/2)
 no_angles = 50 # 20 or more
-instances_no = 42 # 5 or 10
+instances_no = 50 # 5 or 10
 noises = [0.005, 0.01, 0.02]
 
 #%%
@@ -112,4 +118,4 @@ ax[1,0].set_ylabel('$P$', fontsize=11)
 fig.legend(loc='upper center', borderaxespad=0.5, labels=list_kraus, ncol=3)
 fig.tight_layout()
 fig.subplots_adjust(top=0.87)    
-fig.savefig("plots/energy_prob_plot.pdf")
+fig.savefig("plots/noise_plot.pdf")
