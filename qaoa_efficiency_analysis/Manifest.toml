@@ -31,7 +31,7 @@ version = "0.5.0"
 deps = ["LightGraphs", "LinearAlgebra", "Random"]
 git-tree-sha1 = "e71582df246ee3dd8216a2ce235d47621b92abb8"
 repo-rev = "master"
-repo-url = "git@github.com:iitis/BinaryOptimization.jl.git"
+repo-url = "https://github.com/iitis/BinaryOptimization.jl.git"
 uuid = "2cc2a253-a9af-46b7-8fde-300f9234af6e"
 version = "0.1.0"
 
