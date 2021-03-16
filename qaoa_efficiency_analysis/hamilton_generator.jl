@@ -83,15 +83,15 @@ println("arguments are fine. Generating data started ($threads_no threads, max $
     qubo = bom_to_hamiltonian(simplified_tsp_qubo(zeros(n, n)))
     hobo = bom_to_hamiltonian(simplified_tsp_hobo(zeros(n, n)))
     hobo_emu = hobo_emulated(qubo, n)
-    
+
     npzwrite("$dir_out/qubo_hamilton_$n.npz", qubo)
     npzwrite("$dir_out/hobo_hamilton_$n.npz", hobo)
-    npzwrite("$dir_out/hobo_emu_hamilton_$n.npz", hobo_emu)zz
+    npzwrite("$dir_out/hobo_emu_hamilton_$n.npz", hobo_emu)
 
     @assert length(hobo) == length(hobo_emu)
     @assert length(filter(iszero, hobo_emu)) == length(filter(iszero, hobo))
     @assert length(filter(iszero, hobo_emu)) == length(filter(iszero, qubo))
-    
+
     if !(0. ≈ minimum(qubo) ≈ minimum(hobo) ≈ minimum(hobo_emu))
         println("Something wrong, minimal energy should be 0.")
     end
