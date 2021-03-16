@@ -70,7 +70,7 @@ To plot the data please, run
 ```
 julia tsp_qaoa_plot.jl generate plot
 ``` 
-The line will generate and save the plot to `plots` directory.
+The line will generate and save the plot to `plots` directory. In case of new data, one has to change the directory name in the *tsp_qaoa_plot.jl* accordingly.
 
 ### Error mitigation
 
