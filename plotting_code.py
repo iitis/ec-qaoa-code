@@ -79,7 +79,7 @@ for p in noises:
 
 # #%%
 # #with filling plotting!!
-list_kraus = ['no postselection', 'postselection in the end', 'postselection in the end and inbetween']
+list_kraus = ['no postselection', 'postselection in the end', 'postselection in the end and in between']
 list_color = ['r', 'b', 'g']
 list_types = ['r--', 'b-', 'g:']
 
