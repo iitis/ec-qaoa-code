@@ -86,7 +86,7 @@ println("arguments are fine. Generating data started ($threads_no threads, max $
     
     npzwrite("$dir_out/qubo_hamilton_$n.npz", qubo)
     npzwrite("$dir_out/hobo_hamilton_$n.npz", hobo)
-    npzwrite("$dir_out/hobo_emu_hamilton_$n.npz", hobo_emu)zz
+    npzwrite("$dir_out/hobo_emu_hamilton_$n.npz", hobo_emu)
 
     @assert length(hobo) == length(hobo_emu)
     @assert length(filter(iszero, hobo_emu)) == length(filter(iszero, hobo))
