@@ -23,7 +23,7 @@ end
 rc("text", usetex=true)
 rc("font", family="serif", size=8)
 
-cities_no = [3, 4]
+cities_no = [4]
 data_dir = Dict(4 => "data/data_2021-03-09T20:59:46.479/data/")
 data_instances = Dict(4 => "data/data_2021-03-09T20:59:46.479/tsp4/")
 k_max = 30

@@ -42,7 +42,7 @@ The repository already contains the data used in the publications. To generate n
 
 To generate data, run the following files in the *qaoa_efficiency_analysis* directory:
 ```
-python permutation_cutter.py
+python permutation_generator.py
 julia tsp_generator.jl tsp4 4 40
 julia hamilton_generator.jl hamilton 4
 ```
