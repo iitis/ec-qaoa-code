@@ -1,7 +1,6 @@
-from qiskit import QuantumRegister,ClassicalRegister,QuantumCircuit,assemble,Aer,execute, IBMQ
+#%%
+from qiskit import QuantumRegister,QuantumCircuit
 import numpy as np
-import math
-import itertools as it
 
 def convet_t1v1_to_m(t,v,n):
     m = n*(t-1)+v-1
@@ -11,9 +10,7 @@ def qubo_circuit_simplified(hamildict,q,theta):
     # Initialize quantum circuit
     qc = QuantumCircuit(q)
     n = int(np.max(hamildict[:,1]))
-
     int_dict={tuple(map(int, x[0:4])) : x[4] * theta for x in hamildict}
-
     def double_gates(m1,m2,w):
         qc.cx(q[m1],q[m2])
         qc.rz(w,q[m2])
@@ -35,14 +32,3 @@ def qubo_circuit_simplified(hamildict,q,theta):
             w = int_dict[(t,v,0,0)]
             qc.rz(w,q[convet_t1v1_to_m(t,v,n)])
     return qc
-
-if __name__ == "__main__":
-    theta = 0
-    hamildict = np.load('./qaoa_efficiency_analysis/tsp_dict/tsp_5-1.npz')
-    n = int(np.max(hamildict[:,1]))
-    qr = QuantumRegister(n**2,'q')
-    qc = qubo_circuit_simplified(hamildict,qr,theta)
-    depth = qc.depth()
-
-    print(depth/n)
-    # print(qc)

@@ -1,19 +1,12 @@
+import numpy as np
+from qiskit import *
+from qiskit.providers.aer import QasmSimulator
+from qiskit.providers.aer.extensions import Snapshot
+
 from binary_to_unary import binary_to_unary
 from cpkraus import CPKraus
-from matplotlib import rc
-from qiskit import *
-from qiskit.providers.aer.extensions import Snapshot
-from qiskit.providers.aer import QasmSimulator
-import qiskit.providers.aer.noise as noise
-from qiskit.quantum_info import Kraus,Statevector, DensityMatrix
-from qiskit.quantum_info.operators.base_operator import BaseOperator
-from qiskit.quantum_info.operators import Operator, Pauli
-from qiskit.tools.visualization import plot_histogram, plot_bloch_multivector
-from qubo_circuit_sparse import *
-from roundRobin import roundRobin
-import itertools as it
-import matplotlib.pyplot as plt
-import numpy as np
+from qubo_circuit import *
+
 # %matplotlib inline #TODO: work on the visualization
 
 # Unary to binary implementation
@@ -56,7 +49,7 @@ def kraus_gates(qr,n, postselection = True):
     else:
         chan = CPKraus([[[1, 0],[ 0, 0]], [[0, 0],[ 0, 1]]])
     res_list = []
-    l = [0,0]
+    l = [0]*int(math.ceil(math.log(n, 2)))
     qreg = QuantumRegister(n)
     _, binary_bits = binary_to_unary(qreg, n)
     for i in range(n):
@@ -86,7 +79,7 @@ def hobo_qubo_mixer_measurement(hamildict, noise_model,angles,diag_vals, ps_end=
     for theta,phi in zip(qubo_theta,mixer_phi):
         main_circuit += hobo2qubo(n, qr) + qubo_circuit_simplified(hamildict,qr,theta) + hobo2qubo(n, qr).inverse()
         main_circuit += make_mixer(n,qr,phi)
-        
+
         if mid_measure == 'no-ps':
             main_circuit += kraus_gates(qr,n, False)
         elif mid_measure == 'ps':
@@ -98,7 +91,7 @@ def hobo_qubo_mixer_measurement(hamildict, noise_model,angles,diag_vals, ps_end=
         main_circuit += kraus_gates(qr,n, True)
 
     main_circuit += hobo2qubo(n, qr)
-    
+
     # Swap all
     for i in range(int(n**2/2)):
         main_circuit.swap(i,n**2-1-i)
@@ -138,7 +131,7 @@ def hobo_qubo_mixer_measurement_pure(hamildict,angles,diag_vals):
         main_circuit += make_mixer(n,qr,phi)
 
     main_circuit += hobo2qubo(n, qr)
-    
+
     # Swap all
     for i in range(int(n**2/2)):
         main_circuit.swap(i,n**2-1-i)
@@ -157,10 +150,14 @@ def hobo_qubo_mixer_measurement_pure(hamildict,angles,diag_vals):
 
 
 if __name__ == "__main__":
-    hamildict = np.load('./qaoa_efficiency_analysis/tsp_dict/tsp_3-1.npz')
-    angles = np.load('./qaoa_efficiency_analysis/tsp_dict/angles_test_3-1.npz')
-    diag_vals = np.load('./qaoa_efficiency_analysis/tsp_dict/qubo_vec_3-1.npz')
-    noise_model = create_noise_model(0,0)
-    mean_energy = hobo_qubo_mixer_measurement(hamildict,noise_model,angles,diag_vals,'end')
-    print(main_circuit)
-    print('Hooray! the mean energy is', mean_energy)
+    # hamildict = np.load('./qaoa_efficiency_analysis/tsp_dict/tsp_3-2.npz')
+    # angles = np.load('./qaoa_efficiency_analysis/tsp_dict/angles_test_3-1.npz')
+    # diag_vals = np.load('./qaoa_efficiency_analysis/tsp_dict/qubo_vec_3-1.npz')
+    # noise_model = create_noise_model(0,0)
+    # mean_energy = hobo_qubo_mixer_measurement(hamildict,noise_model,angles,diag_vals,'end')
+    # print(main_circuit)
+    # print('Hooray! the mean energy is', mean_energy)
+    n = 3
+    qr = QuantumRegister(n)
+    x, y = kraus_gates(qr,n, postselection = True)
+    print(y)
