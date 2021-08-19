@@ -55,7 +55,7 @@ To generate data for random angles for XY-QAOA and GM-QAOA, please run in the ma
 ```
 ./xy_experiment_generator.sh 
 ```
-This will generate data of appropriate size used in the paper. To parallelize the compution, in th bash script we used `&` so that the next command is run after the previous would was _started_. This will likely produce to large number of processes for a regular PC. To surpass overloading the computer, please remove `&`. All data
+This will generate data of appropriate size used in the paper. To parallelize the compution, in the bash script we used `&` so that the next command runs after the previous would was _started_. This will likely produce to large number of processes for a regular PC. To surpass overloading the computer, please remove `&`. All data
 
 The commands run through this script takes form
 ```
