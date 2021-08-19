@@ -26,7 +26,7 @@ To deactivate an active environment, use
 
 Julia can be downloaded from the official website https://julialang.org/. Version 1.6.1 was used.
 
-In order to set up the environment, please go to the directory were qaoa_efficiency_analysis. Then run julia and use
+In order to set up the environment, please go to the directory ec-qaoa-code. Then run julia and use
 
 ```
 julia> ]
