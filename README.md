@@ -1,10 +1,10 @@
-# [The title]
+# Error mitigation for variational quantum algorithms through mid-circuit measurements
 
 Person responsible for data: Adam Glos (aglos [at] iitis.pl).
 
-The scripts necessary for generating the results provided in the "[The title]"
+The scripts necessary for generating the results provided in the Error mitigation for variational quantum algorithms through mid-circuit measurements
 
-The code was used on Ubuntu OS 20.04. It is not guarantee it will work on other operating systems
+The code was used on Ubuntu OS 20.04. It is not guaranteed that it will work on other operating systems.
 
 # Software instalation
 
@@ -38,11 +38,10 @@ This will install the required packages based on _Manifest.toml_ file. The envir
 
 # Reproducing data
 
-The repository already contains the data used in the publications. To generate new samples, please follow the instruction below. Occasionally the code omits generating new data if old already exist (the scripts will complain, or inform about such issue) - in such case please remove the old data.
+The repository already contains the data used in the publication. To generate new samples, please follow the instruction below. Occasionally the code omits generating new data if old already exists (the scripts will complain, or inform about such issue) - in such a case please remove the old data.
 
 ## TSP generation
-To generate data, run the following files in the _qaoa_efficiency_analysis_ directory:
-
+To generate data, run the following codes in the main directory.
 ```
 julia tsp_generator.jl tsp_data_xy/tsp3 3 100
 julia tsp_generator.jl tsp_data_xy/tsp4 4 100
@@ -55,13 +54,13 @@ To generate data for random angles for XY-QAOA and GM-QAOA, please run in the ma
 ```
 ./xy_experiment_generator.sh 
 ```
-This will generate data of appropriate size used in the paper. To parallelize the compution, in the bash script we used `&` so that the next command runs after the previous would was _started_. This will likely produce to large number of processes for a regular PC. To surpass overloading the computer, please remove `&`. All data
+This will generate data of appropriate size used in the paper. To parallelize the compution, in the bash script we used `&` so that the next command runs after the previous would was _started_. This will likely produce large number of processes for a regular PC. To surpass overloading the computer, please remove `&`. All data
 
 The commands run through this script takes form
 ```
 python energy_diff_generator.py $VAR $CITYNO 40 1 100 rand $GAMMA
 ```
-where `VAR` is the type of error model used for computation, `CITYNO` is the number of cities, `40` is the number of layers considered, `1` is the number of times a single TSP instances should be considered `100` is the number of different TSP instances, `rand` is the type of angles used (the only option working) and `GAMMA` is the number of noise strength chosen.
+where `VAR` is the type of error model used for computation, `CITYNO` is the number of cities, `40` is the number of layers considered, `1` is the number of times a single TSP instances should be considered `100` is the number of different TSP instances, `rand` is the type of angles used (the only option working) and `GAMMA` indicates the noise strength.
 
 Furthermore. the script runs
 ```
@@ -71,7 +70,7 @@ python optimization_qaoa.py 4 40
 which runs the QAOA algorithm for 3/4 cities and 40 TSP instances (each considered once).  To reduce the number of parallel processes, please change the `pool_size` in the file _optimization_qaoa.py_.
 
 
-For Energy difference computation, data will be saved to _data_noise_qaoa_xy_gm/tsp3_plotting_for_paper_  and _data_noise_qaoa_xy_gm/tsp4_plotting_for_paper_ depending on the number of cities considered. For QAOA optimization, the data will be saved to _data_noise_qaoa_xy_gm/optimization_.
+In the energy difference computation, data will be saved to _data_noise_qaoa_xy_gm/tsp3_plotting_for_paper_  and _data_noise_qaoa_xy_gm/tsp4_plotting_for_paper_ depending on the number of cities considered. For QAOA optimization, the data will be saved to _data_noise_qaoa_xy_gm/optimization_.
 
 
 ## Plots generation

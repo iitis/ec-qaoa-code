@@ -13,7 +13,7 @@ if sys.argv[1] in ["--help", "-h"]:
     print("   - noise model ('amp_damp', 'depol' or 'rand_x');")
     print("   - number of: cities, layers, intances, experiments;")
     print("   - and type of angles ('rand' or 'optim').")
-    print("   - and noise strength number (0-2)")
+    print("   - and noise strength number (0-4)")
     print()
     print("Exemple: python energy_generator_xy.py xy amp_damp 3 20 10 10 optim")
     exit(0)
