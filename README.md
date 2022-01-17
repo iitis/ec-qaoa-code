@@ -1,4 +1,4 @@
-# [The title]
+# Code for _Error mitigation for variational quantum algorithms through mid-circuit measurements_
 
 Person responsible for data: Adam Glos (aglos [at] iitis.pl).
 
