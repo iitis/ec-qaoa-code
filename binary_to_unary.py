@@ -1,5 +1,4 @@
-from qiskit import QuantumRegister, QuantumCircuit, ClassicalRegister, execute, BasicAer, Aer
-import numpy as np
+from qiskit import QuantumRegister, QuantumCircuit
 import math as math
 
 def binary_to_unary(qreg, n, binary_bits=None, decomposition = 'on'): # TODO binary_bits should have some default input
@@ -46,10 +45,14 @@ def binary_to_unary(qreg, n, binary_bits=None, decomposition = 'on'): # TODO bin
     return qc, binary_bits
 
 if __name__ == "__main__":
-    for i in range(3,4):
-        hamildict = np.load('./qaoa_efficiency_analysis/tsp_dict/tsp_{}-1.npz'.format(i))
-        n = int(np.max(hamildict[:,1]))
-        qr = QuantumRegister(n)
-        qc, binary_bits = binary_to_unary(qr, n)
-        depth = qc.depth()
-        print(n+1,'->',depth)
+    # for i in range(3,4):
+    #     hamildict = np.load('./qaoa_efficiency_analysis/tsp_dict/tsp_{}-1.npz'.format(i))
+    #     n = int(np.max(hamildict[:,1]))
+    #     qr = QuantumRegister(n)
+    #     qc, binary_bits = binary_to_unary(qr, n)
+    #     depth = qc.depth()
+    #     print(n+1,'->',depth)
+    n = 5
+    qr = QuantumRegister(n)
+    qc, binary_bits = binary_to_unary(qr, n)
+    print(binary_bits)

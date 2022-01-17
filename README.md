@@ -1,17 +1,16 @@
-# Infeasible space reduction for QAOA through encoding change
-Person responsible for data: *Adam Glos* (aglos [at] iitis.pl).
+# [The title]
 
-The scripts necessary for generating the results provided in the "Infeasible space reduction for QAOA through encoding change".
+Person responsible for data: Adam Glos (aglos [at] iitis.pl).
 
-The code used on Ubuntu OS 20.04. It is not guaranteed it will work on other operating systems. 
+The scripts necessary for generating the results provided in the "Error mitigation for variational quantum algorithms through mid-circuit measurements"
 
-## Software installation
+The code was used on Ubuntu OS 20.04. It is not guarantee it will work on other operating systems
 
-### Anaconda
+# Software instalation
 
-Anaconda distribution can be downloaded from https://www.anaconda.com/products/individual
+## Anaconda
 
-To create new environment and install required packages use
+Anaconda distribution can be downloaded from https://www.anaconda.com/products/individual. To install 
 
   `conda env create -f hobo_encoding_change.yml`
 
@@ -19,73 +18,67 @@ To activate this environment, use
   
   `conda activate hobo_encoding_change`
 
-### Julia 
+To deactivate an active environment, use
+  
+  `conda deactivate`
 
-Julia can be downloaded from the official website https://julialang.org/. Version 1.5.2 was used.
+## Julia
 
-In order to set up the environment, please go to the directory were *qaoa_efficiency_analysis*. Then run julia and use
+Julia can be downloaded from the official website https://julialang.org/. Version 1.6.1 was used.
+
+In order to set up the environment, please go to the directory were qaoa_efficiency_analysis. Then run julia and use
 
 ```
 julia> ]
-(@v1.5) activate .
-(@v1.5) instantiate
+(@v1.6) activate .
+(@v1.6) instantiate
 ```
-  
-This will install the required packages. The environment will be activated on its own when running scripts.
 
-## Reproducing data
+This will install the required packages based on _Manifest.toml_ file. The environment will be activated on its own when running scripts.
 
-The repository already contains the data used in the publications. To generate new samples, please follow the instruction below. Occasionally the code omits generating new data if old already exist - in such case please remove the old data.
+# Reproducing data
 
-### QAOA performance
+The repository already contains the data used in the publications. To generate new samples, please follow the instruction below. Occasionally the code omits generating new data if old already exist (the scripts will complain, or inform about such issue) - in such case please remove the old data.
+
+## TSP generation
+To generate data, run the following files in the _qaoa_efficiency_analysis_ directory:
+
+```
+julia tsp_generator.jl tsp_data_xy/tsp3 3 100
+julia tsp_generator.jl tsp_data_xy/tsp4 4 100
+```
+
+This will generate 100 TSP for 3 and 4 cities located at the corresponding repositories.
+
+## Experiment data generation
+To generate data for random angles for XY-QAOA and GM-QAOA, please run in the main directory
+```
+./xy_experiment_generator.sh 
+```
+This will generate data of appropriate size used in the paper. To parallelize the compution, in the bash script we used `&` so that the next command is run after the previous was _started_. This will likely produce large number of processes for a regular PC. To surpass overloading the computer, please remove `&`. 
+The commands run through this script takes form
+```
+python energy_diff_generator.py $VAR $CITYNO 40 1 100 rand $GAMMA
+```
+where `VAR` is the type of error model used for computation, `CITYNO` is the number of cities, `40` is the number of layers considered, `1` is the number of times a single TSP instances should be considered `100` is the number of different TSP instances, `rand` is the type of angles used (the only option working) and `GAMMA` is the number of noise strength chosen.
+
+Furthermore. the script runs
+```
+python optimization_qaoa.py 3 40
+python optimization_qaoa.py 4 40
+```
+which runs the QAOA algorithm for 3/4 cities and 40 TSP instances (each considered once).  To reduce the number of parallel processes, please change the `pool_size` in the file _optimization_qaoa.py_.
 
 
-To generate data, run the following files in the *qaoa_efficiency_analysis* directory:
-```
-python permutation_generator.py
-julia tsp_generator.jl tsp4 4 40
-julia hamilton_generator.jl hamilton 4
-```
-This will generate 40 tsp instances located at *tsp4*, and hamilton instaces for 3, 4  at *hamilton* number of cities used for plotting.
-
-We use a improved version of QAOA which requires generating additional files. To generate those files, please run `julia` and type the following
-```
-using Pkg
-Pkg.activate(".")
-include("sparse_generator_loader.jl")
-generator(9)
-generator(6)
-```
-Note that for n-city instances of tsp one has to run also `generator` with arguments (n-1)^2 and (n-1)*ceil(log(2, n-1)).
+For Energy difference computation, data will be saved to _data_noise_qaoa_xy_gm/tsp3_plotting_for_paper_  and _data_noise_qaoa_xy_gm/tsp4_plotting_for_paper_ depending on the number of cities considered. For QAOA optimization, the data will be saved to _data_noise_qaoa_xy_gm/optimization_.
 
 
-To produce data, run
-```
-julia tsp_qaoa_experiment.jl -p [x] -in tsp4 -outnew data
-```
-This will run emulator of QAOA and save the optimization results to *data/data\_[current\_time]*  together with the copy of relevant files. Instead of `[x]` please provide a number of cores. used for computation.
+## Plots generation
 
-
-To plot the data please, run
+To generate plots, please run the following commands
 ```
-julia tsp_qaoa_plot.jl generate plot
-``` 
-The line will generate and save the plot to `plots` directory. In case of new data, one has to change the directory name in the *tsp_qaoa_plot.jl* accordingly.
-
-### Error mitigation
-
-Please enter *qaoa_efficiency_analysis* and run
+python energy_diff_plot.py 40 1 100 rand
+python prob_diff_plot.py 40 1 100 rand
+python optimization_plot.py
 ```
-julia tsp_generator_dict.jl 50
-```
-to generate samples. Then, go to the main directory and run
-```
-python energy_generator.py 0
-python energy_generator.py 1
-python energy_generator.py 2
-```
-To generate the energy data. Finally rn
-```
-python plotting_code.py
-```
-to generate plot in the `plots` directory.
+The last command may require slightly more time than the previous one, as the energies has to be recomputed. The plots will be saved to _plots_.
